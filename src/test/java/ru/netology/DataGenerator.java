@@ -12,7 +12,6 @@ import java.util.Locale;
 import static io.restassured.RestAssured.given;
 
 @UtilityClass
-
 public class DataGenerator {
 
     public static RequestSpecification requestSpec = new RequestSpecBuilder()
