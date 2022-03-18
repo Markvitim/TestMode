@@ -25,23 +25,31 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-    public static void setUpAll(RegistrationInfo registrationInfo) {
+    public static void setUpAll(RegistrationInfo info) {
 
         given()
                 .spec(requestSpec)
-                .body(registrationInfo)
+                .body(info)
                 .when()
                 .post("/api/system/users")
                 .then()
                 .statusCode(200);
     }
 
-    public static RegistrationInfo generate() {
+    public static RegistrationInfo generateActive() {
         Faker faker = new Faker(new Locale("ru"));
         return new RegistrationInfo(
                 faker.name().username(),
                 faker.internet().password(),
-                faker.bool().bool()
+                faker.letterify("active", true)
+        );
+    }
+    public static RegistrationInfo generateBlocked() {
+        Faker faker = new Faker(new Locale("ru"));
+        return new RegistrationInfo(
+                faker.name().username(),
+                faker.internet().password(),
+                faker.letterify("blocked", false)
         );
     }
 }

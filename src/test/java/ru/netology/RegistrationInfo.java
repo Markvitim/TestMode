@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class RegistrationInfo {
     private final String login;
     private final String password;
-    private final Boolean status;
+    private final String status;
 
 }
