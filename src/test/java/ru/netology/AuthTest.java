@@ -5,8 +5,6 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -23,6 +21,7 @@ public class AuthTest {
     void shouldReturnDemoActive() {
         DataGenerator.setUpAll(DataGenerator.generateActive());
     }
+
     @Test
     void shouldReturnDemoBlocked() {
         DataGenerator.setUpAll(DataGenerator.generateBlocked());
@@ -43,6 +42,7 @@ public class AuthTest {
         $(".button").click();
         $(".heading ").shouldHave(Condition.text("Личный кабинет"));
     }
+
     @Test
     void shouldUserBlocked() {
         RegistrationInfo info = DataGenerator.generateBlocked();
@@ -52,8 +52,9 @@ public class AuthTest {
         $(".button").click();
         $(".notification__content").shouldHave(Condition.text("пользователь заблокирован"));
     }
+
     @Test
-    void shouldInvalidLogin(){
+    void shouldInvalidLogin() {
         RegistrationInfo info = DataGenerator.generateActive();
         DataGenerator.setUpAll(info);
         $("[data-test-id=\"login\"] input").setValue(DataGenerator.generateActive().getLogin());
@@ -61,8 +62,9 @@ public class AuthTest {
         $(".button").click();
         $(".notification__content").shouldHave(Condition.text("Неверно указан логин или пароль"));
     }
+
     @Test
-    void shouldInvalidPassword(){
+    void shouldInvalidPassword() {
         RegistrationInfo info = DataGenerator.generateActive();
         DataGenerator.setUpAll(info);
         $("[data-test-id=\"login\"] input").setValue(info.getLogin());

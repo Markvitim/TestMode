@@ -5,8 +5,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.Locale;
@@ -44,6 +42,7 @@ public class DataGenerator {
                 faker.letterify("active", true)
         );
     }
+
     public static RegistrationInfo generateBlocked() {
         Faker faker = new Faker(new Locale("ru"));
         return new RegistrationInfo(
