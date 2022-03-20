@@ -5,6 +5,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.Locale;
@@ -33,22 +34,17 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
-    public static RegistrationInfo generateActive() {
-        Faker faker = new Faker(new Locale("ru"));
-        return new RegistrationInfo(
-                faker.name().username(),
-                faker.internet().password(),
-                faker.letterify("active", true)
-        );
-    }
+    @RequiredArgsConstructor
+    public static class Registration {
 
-    public static RegistrationInfo generateBlocked() {
-        Faker faker = new Faker(new Locale("ru"));
-        return new RegistrationInfo(
-                faker.name().username(),
-                faker.internet().password(),
-                faker.letterify("blocked", false)
-        );
+        public static RegistrationInfo generate(String status) {
+            Faker faker = new Faker(new Locale("ru"));
+            return new RegistrationInfo(
+                    faker.name().username(),
+                    faker.internet().password(),
+                    status
+            );
+        }
     }
 }
 

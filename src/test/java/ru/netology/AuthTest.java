@@ -11,22 +11,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class AuthTest {
 
-    @Test
-    void shouldGenerate() {
-        RegistrationInfo info = DataGenerator.generateActive();
-        System.out.println(info);
-    }
-
-    @Test
-    void shouldReturnDemoActive() {
-        DataGenerator.setUpAll(DataGenerator.generateActive());
-    }
-
-    @Test
-    void shouldReturnDemoBlocked() {
-        DataGenerator.setUpAll(DataGenerator.generateBlocked());
-    }
-
     @BeforeEach
     void shouldOpen() {
         Configuration.holdBrowserOpen = true;
@@ -35,7 +19,7 @@ public class AuthTest {
 
     @Test
     void shouldUserActive() {
-        RegistrationInfo info = DataGenerator.generateActive();
+        var info = DataGenerator.Registration.generate("active");
         DataGenerator.setUpAll(info);
         $("[data-test-id=\"login\"] input").setValue(info.getLogin());
         $("[data-test-id=\"password\"] input").setValue(info.getPassword());
@@ -45,7 +29,7 @@ public class AuthTest {
 
     @Test
     void shouldUserBlocked() {
-        RegistrationInfo info = DataGenerator.generateBlocked();
+        var info = DataGenerator.Registration.generate("blocked");
         DataGenerator.setUpAll(info);
         $("[data-test-id=\"login\"] input").setValue(info.getLogin());
         $("[data-test-id=\"password\"] input").setValue(info.getPassword());
@@ -55,9 +39,10 @@ public class AuthTest {
 
     @Test
     void shouldInvalidLogin() {
-        RegistrationInfo info = DataGenerator.generateActive();
+        var info = DataGenerator.Registration.generate("active");
         DataGenerator.setUpAll(info);
-        $("[data-test-id=\"login\"] input").setValue(DataGenerator.generateActive().getLogin());
+        $("[data-test-id=\"login\"] input")
+                .setValue(DataGenerator.Registration.generate("active").getLogin());
         $("[data-test-id=\"password\"] input").setValue(info.getPassword());
         $(".button").click();
         $(".notification__content").shouldHave(Condition.text("Неверно указан логин или пароль"));
@@ -65,10 +50,11 @@ public class AuthTest {
 
     @Test
     void shouldInvalidPassword() {
-        RegistrationInfo info = DataGenerator.generateActive();
+        var info = DataGenerator.Registration.generate("active");
         DataGenerator.setUpAll(info);
         $("[data-test-id=\"login\"] input").setValue(info.getLogin());
-        $("[data-test-id=\"password\"] input").setValue(DataGenerator.generateActive().getPassword());
+        $("[data-test-id=\"password\"] input")
+                .setValue(DataGenerator.Registration.generate("active").getPassword());
         $(".button").click();
         $(".notification__content").shouldHave(Condition.text("Неверно указан логин или пароль"));
     }
